@@ -1,16 +1,35 @@
-require "json"
+require 'capybara/poltergeist'
+require 'json'
 
-class Secret
-  attr_accessor :name, :password
-
-  def initialize name, pass
-    @name = name
-    @password = pass
-  end
-
-  def json
-    {name: @name, password: @password}.to_json
-  end
-
-
+def setup
+Capybara.default_driver = :poltergeist
+@session = Capybara::Session.new(:poltergeist)
+@users = Array.new
 end
+
+def loadUsers path 
+  File.open(path).each do |usr|
+    @users << JSON.parse(usr)  
+  end
+end
+
+
+def login user
+  @session.visit('http://www.biblioteca.asav.org.br/biblioteca_s/php/login_usu.php?flag=index.php')
+  @session.fill_in('id_login', with: user['name'])
+  @session.fill_in('id_senhaLogin', with: user['senha'])
+  @session.click_button('button')
+end
+
+def check_books
+  @Session
+end
+
+
+def come_back
+end
+
+setup
+loadUsers('secrets/secrets.json')
+require 'pry'; binding.pry;
+puts ""
