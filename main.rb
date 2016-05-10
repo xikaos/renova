@@ -3,8 +3,8 @@ require 'json'
 require 'yaml'
 
 def setup
-Capybara.default_driver = :poltergeist   
-@session = Capybara::Session.new(:poltergeist)
+Capybara.default_driver = :selenium   
+@session = Capybara::Session.new(:selenium)
 @users = Array.new
 end
 
@@ -43,7 +43,6 @@ setup
 loadUsers('secrets/secrets.json')
 login @users.first 
 books_number.times {|i| dumb_click; come_back; }
-require 'pry'; binding.pry;
 puts 'end'
 
 
