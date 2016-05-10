@@ -1,2 +1,4 @@
 /secrets/secrets.rb
+.ruby-gemset
+.ruby-version
 Gemfile.lock
