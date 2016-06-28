@@ -3,8 +3,8 @@ require 'json'
 require 'yaml'
 
 def setup
-Capybara.default_driver = :selenium   
-@session = Capybara::Session.new(:selenium)
+Capybara.default_driver = :poltergeist   
+@session = Capybara::Session.new(:poltergeist)
 @users = Array.new
 end
 
@@ -21,6 +21,16 @@ end
 def dumb_click
   button_id = "#botao_renovar{index}"
   @session.document.find_xpath('//*[@id="botao_renovar1"]/center/input').first.click
+end
+
+def get_renew_calls
+  nums = 1..(books_number)
+  @inputs = Array.new
+  nums.each do |num|
+    @inputs << @session.document.find_css(".c1 > table:nth-child(1) > tbody:nth-child(1) tr #botao_renovar#{num}
+     center input").first
+  end
+  calls = @inputs.map {|inp| inp.attributes["onclick"] }
 end
 
 
@@ -42,7 +52,14 @@ end
 setup
 loadUsers('secrets/secrets.json')
 login @users.first 
-books_number.times {|i| dumb_click; come_back; }
+get_renew_calls.each do |call|
+  puts "Session current path is: #{@session.current_path}"
+  puts "Firing Javascript call -> #{call}"
+  @session.execute_script(call)
+  puts "Session current path is: #{@session.current_path}"
+  come_back
+end
+@session.driver.quit
 puts 'end'
 
 
