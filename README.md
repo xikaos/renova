@@ -1,5 +1,8 @@
 # Renova
 ------
+
+O PROEJTO UTILIZA PhantomJS como Webdriver: https://github.com/ariya/phantomjs
+
 Renove seus livros da Unisinos executando um script Ruby!
 É necessário que o interpretador Ruby em uma versão posterior à 1.9 esteja instalado na máquina .
 
