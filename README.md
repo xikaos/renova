@@ -1,6 +1,8 @@
 # Renova
 ------
 
+## Docker - Coming soon!
+
 O PROEJTO UTILIZA PhantomJS como Webdriver: https://github.com/ariya/phantomjs
 
 Renove seus livros da Unisinos executando um script Ruby!
